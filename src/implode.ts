@@ -27,8 +27,8 @@ function nodeImplodeForce(node: Node): void {
 
 /* Apply imploding force recursively */
 export function implodeForce(tree: Node): void {
-  nodeImplodeForce(tree);
   tree.children.forEach((c) => {
+    nodeImplodeForce(c);
     implodeForce(c);
   });
 }

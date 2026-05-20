@@ -24,10 +24,10 @@ export class Node {
   }
 
   // Create a Text node at random location
-  public addText(label: string): Text {
+  public addText(label: string, width: number, height: number): Text {
     const x = this.left + Math.random() * this.width;
     const y = this.bottom + Math.random() * this.height;
-    const text = new Text(label, x, y);
+    const text = new Text(label, x, y, width, height);
     text.parent = this;
     this.children.push(text);
     return text;
@@ -93,100 +93,167 @@ export class Node {
       this.position[3] + this.velocity[3] * step,
     ];
 
-    // Confirm that left and right will not swap side if velocity is applied
-    if (newPos[0] > newPos[2]) throw new Error("Negative width" + newPos);
+    // Guardrail #1: No negative width or height
+    // Remediation: Meet in the middle and reverse velocity
+    if (newPos[2] < newPos[0]) {
+      console.log("G#1 Left/right crossed");
+      const mid = (newPos[0] + newPos[2]) / 2;
+      newPos[0] = mid;
+      newPos[2] = mid;
+      this.velocity[0] = -this.velocity[0];
+      this.velocity[2] = -this.velocity[2];
+    }
+    if (newPos[3] < newPos[1]) {
+      console.log("G#1 Top/bottom crossed");
+      const mid = (newPos[1] + newPos[3]) / 2;
+      newPos[1] = mid;
+      newPos[3] = mid;
+      this.velocity[1] = -this.velocity[1];
+      this.velocity[3] = -this.velocity[3];
+    }
 
-    // Ditto height
-    if (
-      newPos[1] > newPos[3]
-    ) throw new Error("Negative height" + newPos);
-
-    // Confirm that sides do not exceed parent
+    // Guardrail #2: Parent should contain children
+    // Remediation: Push parent to fit child and match velocity
+    // Exception: Canvas node has no parent and cannot change size
     if (this.parent) {
       const pp = this.parent.position;
-      if (newPos[0] < pp[0]) {
-        throw new Error("Left escape " + newPos + pp);
-      }
-      if (newPos[1] < pp[1]) {
-        throw new Error("Bottom escape " + newPos + pp);
-      }
-      if (newPos[2] > pp[2]) {
-        throw new Error("Right escape " + newPos + pp);
-      }
-      if (newPos[3] > pp[3]) {
-        throw new Error("Top escape " + newPos + pp);
+      const vv = this.parent.velocity;
+
+      if (this.parent.parent) {
+        // console.log({ newPos, parentPos: pp });
+        if (newPos[0] < pp[0]) {
+          // console.log("G#2 Child left outside parent");
+          // Deno.exit(1);
+          pp[0] = newPos[0];
+          vv[0] = this.velocity[0];
+        }
+        if (newPos[1] < pp[1]) {
+          // console.log("G#2 Child bottom outside parent");
+          // Deno.exit(1);
+          pp[1] = newPos[1];
+          vv[1] = this.velocity[1];
+        }
+        if (newPos[2] > pp[2]) {
+          // console.log("G#2 Child right outside parent");
+          // Deno.exit(1);
+          pp[2] = newPos[2];
+          vv[2] = this.velocity[2];
+        }
+        if (newPos[3] > pp[3]) {
+          // console.log("G#2 Child top outside parent");
+          // Deno.exit(1);
+          pp[3] = newPos[3];
+          vv[3] = this.velocity[3];
+        }
+      } else {
+        // Check if top nodes reach beyond canvas size and reverse velocity
+        const canvas = pp;
+        if (newPos[0] < canvas[0]) {
+          // console.log("G#2 Left outside canvas");
+          newPos[0] = canvas[0];
+          this.velocity[0] = -this.velocity[0];
+        }
+        if (newPos[1] < canvas[1]) {
+          // console.log("G#2 Bottom outside canvas");
+          newPos[1] = canvas[1];
+          this.velocity[1] = -this.velocity[1];
+        }
+        if (newPos[2] > canvas[2]) {
+          // console.log("G#2 Right outside canvas");
+          newPos[2] = canvas[2];
+          this.velocity[2] = -this.velocity[2];
+        }
+        if (newPos[3] > canvas[3]) {
+          // console.log("G#2 Top outside canvas");
+          newPos[3] = canvas[3];
+          this.velocity[3] = -this.velocity[3];
+        }
       }
     }
 
-    // Do the update
+    // Move edges
     [0, 1, 2, 3].forEach((i) => {
       this.position[i] = newPos[i];
       this.velocity[i] *= 0.9; // Friction
       totalVelocity += Math.abs(this.velocity[i]);
     });
 
+    // Generate a text string of node location and velocity for debugging
+    const nodeInfo = (n: Node) =>
+      `p: ${n.position.map((p) => parseFloat(p.toFixed(2)))} xy: ${
+        [n.x, n.y].map((p) => parseFloat(p.toFixed(2)))
+      } m: ${n.mass} v: ${n.velocity.map((v) => parseFloat(v.toFixed(2)))}${
+        "label" in n ? " l: " + n.label : ""
+      }`;
+
+    // Guardrail #3: Confirm child within edges of parent after moving
+    if (this.parent) {
+      if (this.left < this.parent.left) {
+        console.log("Parent:", nodeInfo(this.parent));
+        console.log("Child:", nodeInfo(this));
+        throw new Error("Left edge outside parent");
+      }
+      if (this.bottom < this.parent.bottom) {
+        console.log("Parent:", nodeInfo(this.parent));
+        console.log("Child:", nodeInfo(this));
+        throw new Error("Bottom edge outside parent");
+      }
+      if (this.right > this.parent.right) {
+        console.log("Parent:", nodeInfo(this.parent));
+        console.log("Child:", nodeInfo(this));
+        throw new Error("Right edge outside parent");
+      }
+      if (this.top > this.parent.top) {
+        console.log("Parent:", nodeInfo(this.parent));
+        console.log("Child:", nodeInfo(this));
+        throw new Error("Top edge outside parent");
+      }
+    }
+
+    // Move children
     this.children.forEach((c) => totalVelocity += c.move());
+
     return totalVelocity;
   }
 }
 
-type TextMetrics = {
-  text: string;
-  width: number;
-  height: number;
-  textAlign: string;
-  textBaseline: string;
-  // x,y is center middle
-  x: number;
-  y: number;
-};
-
 /** Text label with parent and no children */
 export class Text extends Node {
-  private readonly measureText: TextMetrics;
-
   constructor(
     public readonly label: string,
     center: number, // X position
     middle: number, // Y position
+    // Width and height varies in terminal and pixel canvas
+    private readonly _width: number,
+    private readonly _height: number,
   ) {
-    // Chars are 8 pixels wide
-    const width = label.length * 8;
-    // Chars are 14 pixels heigh
-    const height = 14;
     const position: Sides = [
-      center - width / 2,
-      middle - height / 2,
-      center + width / 2,
-      middle + height / 2,
+      center - _width / 2,
+      middle - _height / 2,
+      center + _width / 2,
+      middle + _height / 2,
     ];
     super(position);
+  }
 
-    this.measureText = {
-      text: label,
-      width: width,
-      height: height,
-      x: center,
-      y: middle,
-      textAlign: "center",
-      textBaseline: "middle",
-    };
+  public override get width(): number {
+    return this._width;
+  }
+
+  public override get height(): number {
+    return this._height;
   }
 
   public override addNode(): Node {
     throw new Error("Text cannot have children");
   }
 
-  public override addText(_label: string): Text {
+  public override addText(
+    _label: string,
+    _width: number,
+    _height: number,
+  ): Text {
     throw new Error("Text cannot have children");
-  }
-
-  public override get width(): number {
-    return this.measureText.width;
-  }
-
-  public override get height(): number {
-    return this.measureText.height;
   }
 
   public override move(): number {

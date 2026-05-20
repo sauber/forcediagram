@@ -23,7 +23,7 @@ Deno.test("Node properties", () => {
 
 Deno.test("Text Properties", () => {
   const [center, middle] = [10, 10];
-  const text = new Text("hi", center, middle);
+  const text = new Text("hi", center, middle, 2, 1);
   assertEquals(text.label, "hi");
   assertEquals(text.x, center);
   assertEquals(text.y, middle);
@@ -50,15 +50,15 @@ Deno.test("Node Children", () => {
   assertLess(child.top, y2);
 
   // Add text child
-  node.addText("hi");
+  node.addText("hi", 2, 1);
   assertEquals(node.children.length, 2);
 });
 
 Deno.test("Text children", () => {
-  const text = new Text("hi", 10, 10);
+  const text = new Text("hi", 10, 10, 2, 1);
   assertEquals(text.children.length, 0);
   assertThrows(() => text.addNode());
-  assertThrows(() => text.addText("hi"));
+  assertThrows(() => text.addText("hi", 2, 1));
 });
 
 Deno.test("Apply force", () => {
