@@ -1,5 +1,4 @@
-import { agnesi as gravity } from "./force.ts";
-import { Node, Sides } from "./node.ts";
+import { Node, Sides } from "../element/node.ts";
 
 // const snap = (x: number): number => 2 * x / (x * x + 1);
 

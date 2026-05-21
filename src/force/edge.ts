@@ -1,5 +1,5 @@
 import { repulsion } from "./force.ts";
-import { Node, Sides } from "./node.ts";
+import { Node, Sides } from "../element/node.ts";
 
 /** Apply repulsion force to a node towards edges of parent */
 function nodeEdgeForce(node: Node): void {

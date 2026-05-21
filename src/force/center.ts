@@ -1,12 +1,11 @@
-import { nodeDistance } from "./distance.ts";
-import { serpentine as gravity } from "./force.ts";
-import { Node, Sides } from "./node.ts";
+import { nodeDistance } from "../element/distance.ts";
+import { Node, Sides } from "../element/node.ts";
 
 /** Apply gravitation force to a node towards center of parent */
 function centerNodeForce(node: Node): void {
   if (!node.parent) return;
   const parent: Node = node.parent;
-  const eps = 1;
+  // const eps = 1;
 
   // Distance from center
   // console.log(parent);

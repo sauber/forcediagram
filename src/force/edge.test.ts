@@ -1,6 +1,6 @@
 import { assertLess } from "@std/assert";
 import { edgeForce } from "./edge.ts";
-import { Node } from "./node.ts";
+import { Node } from "../element/node.ts";
 
 Deno.test("Avoid Edges", () => {
   const canvas = new Node([0, 0, 100, 100]);

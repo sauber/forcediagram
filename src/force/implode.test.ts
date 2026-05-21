@@ -1,6 +1,6 @@
 import { assertLess } from "@std/assert";
 import { implodeForce } from "./implode.ts";
-import { Node } from "./node.ts";
+import { Node } from "../element/node.ts";
 
 /** A node wants to implode on itself to minimize size */
 Deno.test("Implosion", () => {

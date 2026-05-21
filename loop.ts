@@ -1,6 +1,6 @@
-import { centerForce } from "./src/center.ts";
-import { implodeForce } from "./src/implode.ts";
-import { Node } from "./src/node.ts";
+import { centerForce } from "./src/force/center.ts";
+import { implodeForce } from "./src/force/implode.ts";
+import { Node } from "./src/element/node.ts";
 import {
   Canvas,
   CharCanvas,
@@ -8,7 +8,7 @@ import {
   drawLabel,
   drawLabelCentered,
 } from "jsr:@sauber/ansi-draw@0.1.5";
-import { delay } from "jsr:@std/async/delay";
+import { delay } from "jsr:@std/async@1.3.0/delay";
 
 // const terminal = new CharCanvas();
 
@@ -73,23 +73,23 @@ const nodeInfo = (node: Node): string =>
     ])
   } v: ${nums(node.velocity)}${"label" in node ? " label: " + node.label : ""}`;
 
-const debug = (i: number, node: Node): void =>
-  console.log(
-    i,
-    "p",
-    nums(node.position),
-    "xy",
-    nums([node.x, node.y]),
-    "m",
-    nums([node.mass])[0],
-    "v",
-    nums(node.velocity),
-  );
+// const debug = (i: number, node: Node): void =>
+//   console.log(
+//     i,
+//     "p",
+//     nums(node.position),
+//     "xy",
+//     nums([node.x, node.y]),
+//     "m",
+//     nums([node.mass])[0],
+//     "v",
+//     nums(node.velocity),
+//   );
 
 // Example of box seeking center of canvas
 const canvas = new Node([0, 0, 80, 24]);
 const node = canvas.addNode();
-const text = node.addText("Hello, World!", 13, 1);
+node.addText("Hello, World!", 13, 1);
 // console.log(canvas);
 // Deno.exit(1);
 

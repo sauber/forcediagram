@@ -1,6 +1,6 @@
 import { assertGreater } from "@std/assert";
 import { centerForce } from "./center.ts";
-import { Node, Text } from "./node.ts";
+import { Node, Text } from "../element/node.ts";
 
 Deno.test("Centering", () => {
   const width = 100;
@@ -8,7 +8,7 @@ Deno.test("Centering", () => {
   const [c, m] = [width / 2, height / 2];
 
   const canvas = new Node([0, 0, 100, 100]);
-  const text: Text = canvas.addText("hi");
+  const text: Text = canvas.addText("hi", 2, 1);
 
   // Apply centering forces
   centerForce(canvas);
