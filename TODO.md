@@ -40,6 +40,18 @@ When item is completed change `[ ]` to `[x]`
   - Files: src/simulation/simulation.ts
   - Validation: src/simulation/simulation.test.ts
 
+- [ ] Walker
+  - Objective: Create a single module for visiting all nodes
+  - Problem: Each module in src/force/ has own walker.
+  - Files: src/simulation/walker.ts
+  - Validation: src/simulation/walker.test.ts
+
+- [ ] Add edge force to simulation loop
+  - Objective: Include edge repulsion force in the simulation loop
+  - Problem: Edge force is implemented but not used in the main simulation loop
+  - Files: loop.ts
+  - Validation: src/force/edge.test.ts
+
 ## Rendering
 
 - [ ] Ascii Rendering Module
@@ -48,3 +60,24 @@ When item is completed change `[ ]` to `[x]`
     module
   - Files: src/render/ansi.ts
   - Validation: src/render/ansi.test.ts
+
+- [ ] Add rendering tests
+  - Objective: Create tests for rendering functionality
+  - Problem: No tests exist for rendering
+  - Files: src/render/ansi.test.ts
+  - Validation: src/render/ansi.test.ts
+
+## Documentation
+
+- [ ] Update AGENTS.md
+  - Objective: Keep design documentation up to date
+  - Problem: AGENTS.md files are outdated or missing details
+  - Files: src/element/AGENTS.md, src/force/AGENTS.md, src/simulation/AGENTS.md,
+    src/render/AGENTS.md
+  - Validation: N/A
+
+- [ ] Update DESIGN.md
+  - Objective: Update high-level design document
+  - Problem: DESIGN.md is incomplete and doesn't reflect current implementation
+  - Files: DESIGN.md
+  - Validation: N/A
