@@ -1,5 +1,6 @@
 {
   "imports": {
+    "@sauber/ansi-draw": "jsr:@sauber/ansi-draw@^0.1.6",
     "@std/assert": "jsr:@std/assert@^1.0.19"
   },
   "lock": false

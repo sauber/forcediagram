@@ -14,7 +14,7 @@ Each todo item has the following format:
   - Validation: Name of file holding testing cases
 ```
 
-When item is completed change `[ ]` to `[x]`
+When item is completed change `[ ]` to `[✅]`
 
 ## Elements
 
@@ -34,19 +34,18 @@ When item is completed change `[ ]` to `[x]`
 
 ## Simulation
 
-- [ ] Simulation
+- [x] Simulation
   - Objective: module for running loop of simulation steps
+  - Requirements: class Simulation should take nodes and links as parameters for
+    construction. It should have a settle(max_iterations, velocity, callback)
+    method. The loop exits when max_iterations is reached, or global velocity is
+    below velocity threshold. callback(nodes, links, iteration, velocity) is
+    called after every iteration.
   - Problem: Not implemented
   - Files: src/simulation/simulation.ts
   - Validation: src/simulation/simulation.test.ts
 
-- [ ] Walker
-  - Objective: Create a single module for visiting all nodes
-  - Problem: Each module in src/force/ has own walker.
-  - Files: src/simulation/walker.ts
-  - Validation: src/simulation/walker.test.ts
-
-- [ ] Add edge force to simulation loop
+- [✅] Add edge force to simulation loop
   - Objective: Include edge repulsion force in the simulation loop
   - Problem: Edge force is implemented but not used in the main simulation loop
   - Files: loop.ts
@@ -54,14 +53,14 @@ When item is completed change `[ ]` to `[x]`
 
 ## Rendering
 
-- [ ] Ascii Rendering Module
+- [✅] Ascii Rendering Module
   - Objective: Create module for ansi rendering
   - Problem: Rendering is implemented in loop.ts file and should be moved to own
     module
   - Files: src/render/ansi.ts
   - Validation: src/render/ansi.test.ts
 
-- [ ] Add rendering tests
+- [✅] Add rendering tests
   - Objective: Create tests for rendering functionality
   - Problem: No tests exist for rendering
   - Files: src/render/ansi.test.ts
@@ -69,14 +68,14 @@ When item is completed change `[ ]` to `[x]`
 
 ## Documentation
 
-- [ ] Update AGENTS.md
+- [✅] Update AGENTS.md
   - Objective: Keep design documentation up to date
   - Problem: AGENTS.md files are outdated or missing details
   - Files: src/element/AGENTS.md, src/force/AGENTS.md, src/simulation/AGENTS.md,
     src/render/AGENTS.md
   - Validation: N/A
 
-- [ ] Update DESIGN.md
+- [✅] Update DESIGN.md
   - Objective: Update high-level design document
   - Problem: DESIGN.md is incomplete and doesn't reflect current implementation
   - Files: DESIGN.md

@@ -29,3 +29,11 @@ See `src/simulation/AGENTS.md` for design.
 ## Rendering
 
 See `src/render/AGENTS.md` for design.
+
+## Implementation Status
+
+- ✅ Ascii Rendering Module: Complete with tests
+- ✅ Node and Text elements: Implemented
+- ✅ Force calculations: Center, implode, edge forces
+- ✅ Simulation loop: Basic implementation
+- ✅ Documentation: Updated
