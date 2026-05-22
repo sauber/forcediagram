@@ -1,9 +1,11 @@
 import { Node, Sides } from "../element/node.ts";
-
-// const snap = (x: number): number => 2 * x / (x * x + 1);
+import { Force } from "./types.ts";
 
 /** Apply inwards gravity between opposite edges */
-function nodeImplodeForce(node: Node): void {
+export const implodeForce: Force = (node: Node): Sides => {
+  // Does not apply to root node
+  if (!node.parent) return [0, 0, 0, 0] as Sides;
+
   // Distance between opposite sides
   const distance: Sides = [
     node.width, // Left-Right
@@ -12,22 +14,6 @@ function nodeImplodeForce(node: Node): void {
     node.height, // Top-Bottom
   ];
 
-  // Apply repulsion to pull edges inward (negative force)
-  // const mass = node.mass;
-  // const force = distance.map((d) => repulsion(d)) as Sides;
-  // const force = distance.map((d) => gravity(-d) / mass / 2) as Sides;
-  // const force = distance.map((d) => 1 / (d + 1) - d) as Sides;
-  const force = distance.map((d) => 2 / (d * d + 0.5) - d) as Sides;
-  // const force = distance.map((d) => -d / 4) as Sides;
-  // console.log("implode force", force);
-  // console.log({ distance, force });
-  node.applyForce(force);
-}
-
-/* Apply imploding force recursively */
-export function implodeForce(tree: Node): void {
-  tree.children.forEach((c) => {
-    nodeImplodeForce(c);
-    implodeForce(c);
-  });
-}
+  const force: Sides = distance.map((x) => 1 / (x + 1) - 1) as Sides;
+  return force;
+};

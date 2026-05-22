@@ -4,6 +4,7 @@ import { Node } from "./src/element/node.ts";
 import { dashboard } from "./src/render/dashboard.ts";
 import { Simulation } from "./src/simulation/simulation.ts";
 import { embraceForce } from "./src/force/embrace.ts";
+import { implodeForce } from "./src/force/implode.ts";
 
 // Tree of nodes
 const width = 80, height = 24;
@@ -30,5 +31,9 @@ const callback = async (
 callback(canvas, 0, 0);
 
 // Run simulation
-const simulation = new Simulation(canvas, [], [centerForce, embraceForce]);
+const simulation = new Simulation(canvas, [], [
+  centerForce,
+  embraceForce,
+  implodeForce,
+]);
 simulation.settle(500, 0.001, callback);
