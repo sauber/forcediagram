@@ -73,12 +73,12 @@ export class Simulation {
     velocityThreshold: number,
     callback?: CallBack,
   ): Promise<void> {
-    console.log(
-      "Starting simulation with maxIterations:",
-      maxIterations,
-      "velocityThreshold:",
-      velocityThreshold,
-    );
+    // console.log(
+    //   "Starting simulation with maxIterations:",
+    //   maxIterations,
+    //   "velocityThreshold:",
+    //   velocityThreshold,
+    // );
     for (let i = 0; i < maxIterations; i++) {
       // Apply forces
       this.applyForces();

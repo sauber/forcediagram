@@ -25,8 +25,14 @@ export class Node {
 
   // Create a Text node at random location
   public addText(label: string, width: number, height: number): Text {
-    const x = this.left + Math.random() * this.width;
-    const y = this.bottom + Math.random() * this.height;
+    const x = this.left + width / 2 + Math.random() * (this.width - width);
+    const y = this.bottom + height / 2 + Math.random() * (this.height - height);
+    // console.log(
+    //   `Adding text "${label}" at (${x.toFixed(2)}, ${
+    //     y.toFixed(2)
+    //   }) with size (${width}, ${height})`,
+    // );
+    // const x = this.left +Math.random() * this.height;
     const text = new Text(label, x, y, width, height);
     text.parent = this;
     this.children.push(text);
