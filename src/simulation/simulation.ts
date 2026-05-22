@@ -53,8 +53,9 @@ export class Simulation {
       for (const force of this.forces) {
         const f: Sides = force(node);
         // console.debug(`Applying force to node at (${node.x}, ${node.y}):`, f);
-        // Verify that force is in valid range [-1;1]
-        if (f.some((v) => v < -1 || v > 1)) {
+        // Verify that force is in valid range [-2;2]
+        // Force=0 is no force, Force=[-2;2] is normal force, Force>1 or <-1 is strong force
+        if (f.some((v) => v < -2 || v > 2)) {
           throw new Error(
             `Force out of bounds for node at (${node.x.toFixed(2)}, ${
               node.y.toFixed(2)
