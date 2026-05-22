@@ -34,11 +34,37 @@ export class Simulation {
   private calculateVelocity(): number {
     let globalVelocity = 0;
     this.nodes.forEach((node) => {
+      console.log(
+        "Node at position:",
+        node.position,
+        "Velocity:",
+        node.velocity,
+      );
       node.velocity.forEach((v) => {
         globalVelocity += Math.abs(v);
       });
     });
     return globalVelocity;
+  }
+
+  // Apply force calculations
+  private applyForces(): void {
+    for (const node of this.nodes) {
+      for (const force of this.forces) {
+        const f: Sides = force(node);
+        // console.debug(`Applying force to node at (${node.x}, ${node.y}):`, f);
+        // Verify that force is in valid range [-1;1]
+        if (f.some((v) => v < -1 || v > 1)) {
+          throw new Error(
+            `Force out of bounds for node at (${node.x.toFixed(2)}, ${
+              node.y.toFixed(2)
+            }):`,
+            f,
+          );
+        }
+        node.applyForce(f);
+      }
+    }
   }
 
   // Run simulation loop
@@ -47,15 +73,24 @@ export class Simulation {
     velocityThreshold: number,
     callback?: CallBack,
   ): Promise<void> {
+    console.log(
+      "Starting simulation with maxIterations:",
+      maxIterations,
+      "velocityThreshold:",
+      velocityThreshold,
+    );
     for (let i = 0; i < maxIterations; i++) {
       // Apply forces
       this.applyForces();
 
       // Move nodes
-      this.nodes.forEach((node) => node.move());
+      let velocity = 0;
+      this.nodes.forEach((node) => (velocity += node.move()));
+
+      // console.log("Iteration:", i, "Global velocity:", velocity);
 
       // Calculate velocity
-      const velocity = this.calculateVelocity();
+      // const velocity = this.calculateVelocity();
 
       // Call callback if provided
       if (callback) {
@@ -65,16 +100,6 @@ export class Simulation {
       // Exit if velocity is below threshold
       if (velocity < velocityThreshold) {
         break;
-      }
-    }
-  }
-
-  // Apply force calculations
-  private applyForces(): void {
-    for (const node of this.nodes) {
-      for (const force of this.forces) {
-        const f: Sides = force(node);
-        node.applyForce(f);
       }
     }
   }

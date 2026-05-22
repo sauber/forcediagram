@@ -22,7 +22,7 @@ const callback = async (
   const reset: string = "\u001b[0J";
   console.log(up + reset + output);
   output_lines = output.split("\n").length;
-  await delay(100);
+  await delay(10);
 };
 
 // Display initial state
@@ -30,4 +30,4 @@ callback(canvas, 0, 0);
 
 // Run simulation
 const simulation = new Simulation(canvas, [], [centerForce]);
-simulation.settle(30, 1.0, callback);
+simulation.settle(500, 0.001, callback);

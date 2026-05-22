@@ -77,7 +77,19 @@ export class Node {
   /** Applying force to change velocity */
   public applyForce(force: Sides): void {
     const mass = this.mass;
+    // const velocityBefore = [...this.velocity];
     [0, 1, 2, 3].forEach((i) => this.velocity[i] += force[i] / mass);
+    // console.debug(
+    //   `Applied force to node at (${this.x.toFixed(2)}, ${this.y.toFixed(2)}):`,
+    //   mass,
+    //   force,
+    //   "New velocity:",
+    //   this.velocity,
+    //   "Velocity before:",
+    //   velocityBefore,
+    //   "Velocity change:",
+    //   this.velocity.map((v, i) => v - velocityBefore[i]),
+    // );
   }
 
   /** Move edge positions */
@@ -85,7 +97,7 @@ export class Node {
     let totalVelocity = 0;
 
     // New positions
-    const step = 0.01;
+    const step = .11;
     const newPos: Sides = [
       this.position[0] - this.velocity[0] * step,
       this.position[1] - this.velocity[1] * step,
@@ -257,15 +269,28 @@ export class Text extends Node {
   }
 
   public override move(): number {
-    // Combine left and right velocity tom maintain fixed width
-    const vx = this.velocity[2] - this.velocity[0];
+    const velocityBefore = [...this.velocity];
+    // Match left and right velocity to maintain fixed width
+    const vdx = this.velocity[2] + this.velocity[0];
+    const vx = this.velocity[2] - vdx / 2;
     this.velocity[0] = -vx;
     this.velocity[2] = vx;
 
-    // Combine top and bottom velocity to maintain fixed height
-    const vy = this.velocity[3] - this.velocity[1];
+    // Match top and bottom velocity to maintain fixed height
+    const vdy = this.velocity[3] + this.velocity[1];
+    const vy = this.velocity[3] - vdy / 2;
     this.velocity[1] = -vy;
     this.velocity[3] = vy;
+
+    // console.log(
+    //   "Moving text node:",
+    //   this.label,
+    //   "Velocity before:",
+    //   velocityBefore,
+    //   "Velocity after:",
+    //   this.velocity,
+    // );
+
     super.move();
     return Math.abs(vx) + Math.abs(vy);
   }
