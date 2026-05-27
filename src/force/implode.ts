@@ -1,7 +1,9 @@
 import { Node, Sides } from "../element/node.ts";
 import { Force } from "./types.ts";
 
-/** Apply inwards gravity between opposite edges */
+/** Apply inwards gravity between opposite edges
+ * Stronger force the further apart
+ */
 export const implodeForce: Force = (node: Node): Sides => {
   // Does not apply to root node
   if (!node.parent) return [0, 0, 0, 0] as Sides;
@@ -14,6 +16,6 @@ export const implodeForce: Force = (node: Node): Sides => {
     node.height, // Top-Bottom
   ];
 
-  const force: Sides = distance.map((x) => 1 / (x + 1) - 1) as Sides;
+  const force: Sides = distance.map((x) => (1 / (x + 1) - 1) / 2) as Sides;
   return force;
 };

@@ -1,4 +1,3 @@
-import { nodeDistance } from "../element/distance.ts";
 import { Node, Sides } from "../element/node.ts";
 import { Force } from "./types.ts";
 
@@ -12,12 +11,20 @@ export const containmentForce: Force = (node: Node): Sides => {
   if (!node.parent) return [0, 0, 0, 0] as Sides;
 
   // Distance between opposite sides
-  const distance: Sides = nodeDistance(node.position, node.parent.position);
+  const innerDistance: Sides = [
+    node.left - node.parent.left,
+    node.bottom - node.parent.bottom,
+    node.parent.right - node.right,
+    node.parent.top - node.top,
+  ];
 
   // Repulsive forces
-  const m = node.mass;
-  const force: Sides = distance.map((x) => Math.tanh(x / m) - 1) as Sides;
-  console.log({ distance, force });
+  // const m = node.mass;
+  const massRatio = node.mass / node.parent.mass;
+  const force: Sides = innerDistance.map((x) =>
+    Math.tanh(x * massRatio) - 1
+  ) as Sides;
+  // console.log({ innerDistance, force, massRatio });
 
   return force;
 };

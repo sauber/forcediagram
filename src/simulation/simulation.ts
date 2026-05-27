@@ -60,7 +60,6 @@ export class Simulation {
             `Force out of bounds for node at (${node.x.toFixed(2)}, ${
               node.y.toFixed(2)
             }):`,
-            f,
           );
         }
         node.applyForce(f);

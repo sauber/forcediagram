@@ -14,7 +14,7 @@ Deno.test("Node touches parent", () => {
   link(root, node);
 
   const force = containmentForce(node);
-  console.log(force);
+  // console.log(force);
 
   assertEquals(force, [-1, -1, -1, -1]);
 });
@@ -26,6 +26,6 @@ Deno.test("Node inside parent", () => {
   link(root, node);
 
   const force = containmentForce(node);
-  console.log(force);
+  // console.log(force);
   assertNotEquals(force, [-1, -1, -1, -1]);
 });

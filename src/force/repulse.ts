@@ -1,7 +1,11 @@
 import { repulsion } from "./force.ts";
 import { Node, Sides } from "../element/node.ts";
 
-/** Apply repulsion force to a node towards edges of parent */
+/** Apply repulsion force to siblings
+ * Confirm that siblings are on the correct side
+ * Directly opposite has stronger force than partly aligned sides, or sides not overlapping
+ * TODO: Implementation
+ */
 function nodeEdgeForce(node: Node): void {
   if (!node.parent) return;
   const parent: Node = node.parent;

@@ -1,5 +1,5 @@
 import { assertLess } from "@std/assert";
-import { edgeForce } from "./edge.ts";
+import { edgeForce } from "./repulse.ts";
 import { Node } from "../element/node.ts";
 
 Deno.test("Avoid Edges", () => {
