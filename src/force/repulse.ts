@@ -69,7 +69,8 @@ export const repulsiveForce: Force = (node: Node): Sides => {
     const overlap = overlapRatio(node.position, sibling.position);
     if (overlap > 0) {
       // Choose the side with the deepest penetration (most negative)
-      const deepest = Math.min(...distance.filter((d) => d < 0));
+      // Choose the side with the least penetration (closest to zero) among overlapping sides
+      const deepest = Math.max(...distance.filter((d) => d < 0));
       const sideIndex = distance.findIndex((d) => d === deepest);
       // Strong repulsion using tanh: full overlap => ~-1.76, no overlap => 0
       const magnitude = Math.tanh(-overlap) - 1;
@@ -110,6 +111,32 @@ export const repulsiveForce: Force = (node: Node): Sides => {
       // top side
       if (distance[3] > 0) {
         force[3] += -1 / distance[3];
+      }
+    }
+
+    // Corner repulsion for non-aligned nodes
+    if (verticalOverlap <= 0 && horizontalOverlap <= 0) {
+      const centerX = (node.left + node.right) / 2;
+      const centerY = (node.top + node.bottom) / 2;
+      const siblingCenterX = (sibling.left + sibling.right) / 2;
+      const siblingCenterY = (sibling.top + sibling.bottom) / 2;
+      const dx = siblingCenterX - centerX;
+      const dy = siblingCenterY - centerY;
+      // Apply stronger force on dominant axis
+      if (Math.abs(dx) >= Math.abs(dy)) {
+        // Horizontal dominant
+        if (dx > 0) {
+          force[0] += -1; // push left side
+        } else {
+          force[2] += -1; // push right side
+        }
+      } else {
+        // Vertical dominant
+        if (dy > 0) {
+          force[3] += -1; // push top side
+        } else {
+          force[1] += -1; // push bottom side
+        }
       }
     }
   });
