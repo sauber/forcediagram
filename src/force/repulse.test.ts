@@ -1,4 +1,4 @@
-import { assertEquals } from "@std/assert";
+import { assertEquals, assertGreater } from "@std/assert";
 import { overlapRatio, repulsiveForce } from "./repulse.ts";
 import { Node, Sides } from "../element/node.ts";
 
@@ -102,24 +102,41 @@ Deno.test("Repulsive Force Angle", () => {
   nodeA.parent = parent;
   // deno-fmt-ignore
 
-  const angles = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330];
-  angles.forEach((angle) => {
-    const radians = (angle * Math.PI) / 180;
-    const nodeB = new Node([
-      Math.cos(radians) * 150 - 50,
-      Math.sin(radians) * 150 - 50,
-      Math.cos(radians) * 150 + 50,
-      Math.sin(radians) * 150 + 50,
-    ]);
+  // Format of test cases: [description, position, index of stronger force, index of weaker force]
+  const angleTestCases: [string, Sides, number, number][] = [
+    ["30° (up>right)", [125, 143, 225, 243], 3, 2],
+    ["60° (right>up)", [143, 125, 243, 225], 2, 3],
+    ["120° (right>down)", [143, -125, 243, -25], 2, 1],
+    ["150° (down>right)", [125, -243, 225, -143], 1, 2],
+    ["210° (down>left)", [-125, -243, -25, -143], 1, 0],
+    ["240° (left>down)", [-143, -125, -43, -25], 0, 1],
+    ["300° (left>up)", [-143, 125, -43, 225], 0, 3],
+    ["330° (up>left)", [-125, 143, -25, 243], 3, 0],
+  ];
+  angleTestCases.forEach(([description, position, strongIndex, weakIndex]) => {
+    // const radians = (angle * Math.PI) / 180;
+    // TODO: Ensure corner to corner direction from A to B is the specified angle
+    // const nodeB = new Node([
+    //   Math.cos(radians) * 150 - 50,
+    //   Math.sin(radians) * 150 - 50,
+    //   Math.cos(radians) * 150 + 50,
+    //   Math.sin(radians) * 150 + 50,
+    // ]);
+    const nodeB = new Node(position);
     parent.children.push(nodeB);
     nodeB.parent = parent;
 
     const force = repulsiveForce(nodeA);
-    // console.log(
-    //   `Angle ${angle}°: force = ${force.map((f) => f.toPrecision(2))}`,
-    // );
+    console.log(
+      `${description}°: force = ${force.map((f) => f.toPrecision(2))}`,
+    );
 
-    // TODO: Assert force direction and magnitude based on angle
+    // Assert force direction and magnitude based on angle
+    assertGreater(
+      Math.abs(force[strongIndex]),
+      Math.abs(force[weakIndex]),
+      `At ${description}, expected stronger force at index ${strongIndex} than index ${weakIndex}, force is ${force}`,
+    );
 
     parent.children.pop(); // Clean up for next iteration
   });
