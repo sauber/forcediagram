@@ -76,7 +76,8 @@ Deno.test("Enlarge", () => {
   const node = new Node([x1, y1, x2, y2]);
   const f = 1;
   const mass = node.mass;
-  const d = f / mass * 0.01;
+  const step = 0.11;
+  const d = f / mass * step;
   const force: Sides = [f, f, f, f];
   node.applyForce(force);
   node.move();
@@ -89,7 +90,8 @@ Deno.test("Shrink", () => {
   const node = new Node([x1, y1, x2, y2]);
   const f = -2;
   const mass = node.mass;
-  const d = f / mass * 0.01;
+  const step = 0.11;
+  const d = f / mass * step;
   const force: Sides = [f, f, f, f];
   node.applyForce(force);
   node.move();
