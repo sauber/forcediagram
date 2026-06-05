@@ -1,0 +1,4 @@
+{
+  "name": "Forcediagram Dev Container",
+  "dockerFile": "Dockerfile"
+}
