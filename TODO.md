@@ -18,36 +18,30 @@ When item is completed change `[ ]` to `[✅]`
 
 ## Documentation
 
-- [ ] Fix filenames in completed tasks
-  - Objective: Correct completed task references to match actual filenames
-  - Problem: "Repulsion force" task references repulsion.ts (actual: repulse.ts),
-    "Ascii Rendering Module" references ansi.ts (actual: dashboard.ts),
-    "Add edge force" references edge.test.ts (actual: repulse.test.ts)
-  - Files: TODO.md
-  - Validation: TODO.md
-
-- [ ] Update src/render/AGENTS.md
+- [✅] Update src/render/AGENTS.md
   - Objective: Match documentation to actual implementation
-  - Problem: References AsciiRenderer from ./ansi.ts but actual module is dashboard() in dashboard.ts
+  - Problem: References AsciiRenderer from ./ansi.ts but actual module is
+    dashboard() in dashboard.ts
   - Files: src/render/AGENTS.md
   - Validation: N/A
 
-- [ ] Update src/force/AGENTS.md checkbox states
+- [✅] Update src/force/AGENTS.md checkbox states
   - Objective: Mark Repulsion as implemented, adjust descriptions
   - Problem: Repulsion checkbox shows `[ ]` but repulse.ts is fully implemented
   - Files: src/force/AGENTS.md
   - Validation: N/A
 
-- [ ] Update src/element/AGENTS.md
+- [✅] Update src/element/AGENTS.md
   - Objective: Clarify Canvas immovable edge behavior
-  - Problem: States "Edges cannot move" but no explicit immovability mechanism exists;
-    Canvas avoids movement because no forces apply to root nodes
+  - Problem: States "Edges cannot move" but no explicit immovability mechanism
+    exists; Canvas avoids movement because no forces apply to root nodes
   - Files: src/element/AGENTS.md
   - Validation: N/A
 
-- [ ] Update DESIGN.md implementation status
+- [✅] Update DESIGN.md implementation status
   - Objective: Reflect actual implementation completeness
-  - Problem: DESIGN.md marks all sections as complete but 6 of 11 forces remain unimplemented
+  - Problem: DESIGN.md marks all sections as complete but 6 of 11 forces remain
+    unimplemented
   - Files: DESIGN.md
   - Validation: N/A
 
@@ -55,7 +49,8 @@ When item is completed change `[ ]` to `[✅]`
 
 - [ ] Fix unused import prefix in loop.ts
   - Objective: Replace inline `jsr:` import with deno.json dependency
-  - Problem: `jsr:@std/async` inline import triggers `no-import-prefix` lint error
+  - Problem: `jsr:@std/async` inline import triggers `no-import-prefix` lint
+    error
   - Files: loop.ts, deno.json
   - Validation: `deno lint` passes
 
@@ -110,7 +105,9 @@ When item is completed change `[ ]` to `[✅]`
   - Validation: src/force/length.test.ts
 
 - [ ] Integrate links into simulation forces
-  - Objective: Links parameter should drive edge/length forces in simulation loop
-  - Problem: Links are accepted by Simulation constructor but not used in force calculations
+  - Objective: Links parameter should drive edge/length forces in simulation
+    loop
+  - Problem: Links are accepted by Simulation constructor but not used in force
+    calculations
   - Files: src/simulation/simulation.ts
   - Validation: src/simulation/simulation.test.ts

@@ -2,7 +2,7 @@
 
 A number of forces are in effect:
 
-- [ ] Repulsion: A node pulls away from other nodes of same parent
+- [x] Repulsion: A node pulls away from other nodes of same parent
 - [x] Containment: A node pulls inwards from parent edges (also from Canvas)
 - [x] Implosion: A node contracts onto itself to minimize size
 - [x] Center: A node seeks towards center of parent (also of Canvas)

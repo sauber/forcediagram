@@ -32,8 +32,9 @@ See `src/render/AGENTS.md` for design.
 
 ## Implementation Status
 
-- ✅ Ascii Rendering Module: Complete with tests
-- ✅ Node and Text elements: Implemented
-- ✅ Force calculations: Center, implode, edge forces
-- ✅ Simulation loop: Basic implementation
-- ✅ Documentation: Updated
+- ✅ Node and Text elements: Implemented with tests
+- ✅ Rendering (dashboard): Complete with tests
+- ✅ Simulation loop: Basic implementation with tests
+- ✅ Forces implemented: Center, Containment, Implosion, Embracement, Repulsion
+- ❌ Forces not implemented: Alignment, Sizing, Grid, Overlap (links/nodes), Orthogonality, Length
+- ❌ Link element: Not implemented

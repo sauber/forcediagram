@@ -13,9 +13,8 @@ node positions and labels into terminal-friendly ASCII art using the
 ## Usage
 
 ```ts
-import { AsciiRenderer } from "./ansi.ts";
+import { dashboard } from "./dashboard.ts";
 
-const renderer = new AsciiRenderer();
-renderer.drawTree(rootNode);
-console.log(renderer.toString());
+const output = dashboard(tree, iteration, velocity);
+console.log(output);
 ```

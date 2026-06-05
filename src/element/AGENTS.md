@@ -15,11 +15,11 @@ resizes the node.
 
 ## Canvas
 
-Like a node, but
+Canvas is a regular Node with no parent. It is the root of the node tree.
 
-- Top level node
 - Has no parent.
-- Edges cannot move
+- Edges do not move because force functions return zero for nodes with no parent.
+- Children are constrained within canvas bounds by movement guardrails (cannot leave canvas).
 
 ## Text
 
