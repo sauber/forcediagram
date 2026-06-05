@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-import-prefix
 import { delay } from "jsr:@std/async@1.3.0/delay";
 import { centerForce } from "./src/force/center.ts";
 import { Node } from "./src/element/node.ts";

@@ -24,8 +24,10 @@ description: Use when writing, reviewing, or planning Deno/TypeScript code. Cove
 
 ## Module System
 
-- **Always include the `.ts` extension** on relative imports: `import { Foo } from "./foo.ts"`. Never omit it or use `/index.ts` barrel files.
-- **No barrel files** (`index.ts`, `mod.ts`). Import the exact file that exports what you need.
+- **Always include the `.ts` extension** on relative imports: `import { Foo } from "./foo.ts"`. Never omit it or use `/index.ts`.
+- **Re-export all public symbols** from a directory via a single `mod.ts` file in that directory. For example, `src/force/mod.ts` re-exports every public function/type from each file in `src/force/`.
+  - Modules in **other directories** import from `mod.ts` (via the directory path, e.g., `"../force/"`) — never from individual files.
+  - Modules in the **same directory** import directly from the source file (e.g., `"./repulse.ts"`) — never from `mod.ts` (avoid circular re-exports).
 - **No `node:` specifiers** — prefer web-standard APIs (`fetch`, `console`, `TextEncoder`, `URL`, etc.) over Node compatibility.
 - **No `npm:` imports** unless absolutely necessary. Prefer JSR (`jsr:`) or `jsr.io` for packages.
 - Use `export type` for type-only exports. Use `import type` for type-only imports.

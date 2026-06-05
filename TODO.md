@@ -47,11 +47,13 @@ When item is completed change `[ ]` to `[✅]`
 
 ## Linting / Code Quality
 
-- [ ] Fix unused import prefix in loop.ts
-  - Objective: Replace inline `jsr:` import with deno.json dependency
-  - Problem: `jsr:@std/async` inline import triggers `no-import-prefix` lint
-    error
-  - Files: loop.ts, deno.json
+- [✅] Fix no-import-prefix lint error in example.ts
+  - Objective: Keep inline `jsr:` import in example.ts for standalone
+    runnability; suppress lint rule with `// deno-lint-ignore-file`
+    directive and add `@std/async` to deno.json for project use
+  - Problem: `jsr:@std/async` inline import in example.ts triggers
+    `no-import-prefix` lint error
+  - Files: example.ts, deno.json
   - Validation: `deno lint` passes
 
 - [ ] Remove unused variable velocityBefore
@@ -103,6 +105,25 @@ When item is completed change `[ ]` to `[✅]`
   - Problem: Not implemented. Depends on Link element.
   - Files: src/force/length.ts
   - Validation: src/force/length.test.ts
+
+- [ ] Update example.ts imports to use mod.ts
+  - Objective: Change all src/ imports in example.ts to reference mod.ts
+    files (e.g., `"./src/force/"`) instead of individual source files.
+  - Problem: example.ts imports directly from individual files (e.g.,
+    `"./src/force/center.ts"`), which violates the mod.ts convention for
+    cross-directory imports.
+  - Files: example.ts
+  - Validation: `deno run example.ts` runs without errors
+
+- [ ] Create mod.ts barrel files in each src/ subdirectory
+  - Objective: Add `mod.ts` to each src/ subdirectory re-exporting all public
+    symbols; update cross-directory imports to reference via `mod.ts`; keep
+    same-directory imports pointing directly to source files.
+  - Problem: No `mod.ts` files exist; each file is imported directly regardless
+    of directory relationship, violating the mod.ts convention.
+  - Files: src/element/mod.ts, src/force/mod.ts, src/render/mod.ts,
+    src/simulation/mod.ts
+  - Validation: `deno check` and `deno test` pass
 
 - [ ] Integrate links into simulation forces
   - Objective: Links parameter should drive edge/length forces in simulation
