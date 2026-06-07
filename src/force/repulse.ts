@@ -1,4 +1,4 @@
-import { Node, Sides } from "../element/node.ts";
+import { Node, Sides } from "../element/mod.ts";
 import { Force } from "./types.ts";
 
 /** Sum multiple Sides vectors element-wise into one

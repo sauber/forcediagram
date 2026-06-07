@@ -1,4 +1,4 @@
-import { Node, Sides } from "../element/node.ts";
+import { Node, Sides } from "../element/mod.ts";
 
 /** For a node generate a force vector
  * Positive values indicate attraction, ie. side moves outwards.

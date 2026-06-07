@@ -1,6 +1,6 @@
 import { assertEquals, assertGreater } from "@std/assert";
 import { overlapRatio, repulsiveForce } from "./repulse.ts";
-import { Node, Sides } from "../element/node.ts";
+import { Node, Sides } from "../element/mod.ts";
 
 // Test cases for overlapping nodes
 const overlapTestCases: [string, Sides, Sides, number][] = [

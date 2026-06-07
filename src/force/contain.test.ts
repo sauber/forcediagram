@@ -1,6 +1,6 @@
 import { assertEquals, assertNotEquals } from "@std/assert";
 import { containmentForce } from "./contain.ts";
-import { Node } from "../element/node.ts";
+import { Node } from "../element/mod.ts";
 
 function link(parent: Node, child: Node) {
   parent.children.push(child);

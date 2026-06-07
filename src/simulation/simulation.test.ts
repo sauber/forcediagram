@@ -1,13 +1,13 @@
 import { assertEquals, assertInstanceOf } from "@std/assert";
-import { Node, Sides, Text } from "../element/node.ts";
-import { CallBack, Link, Simulation } from "./simulation.ts";
-import { Force } from "../force/types.ts";
+import { Link, Node, Sides, Text } from "../element/mod.ts";
+import { CallBack, Simulation } from "./simulation.ts";
+import { Force } from "../force/mod.ts";
 
 const root: Node = new Node([0, 0, 20, 20]);
 const node1: Node = root.addNode();
 const node2: Node = root.addNode();
 const _text: Text = node1.addText("Hello", 5, 1);
-const links: Link[] = [{ source: node1, target: node2 }];
+const links: Link[] = [new Link(node1, node2)];
 const noForce: Force = () => [0, 0, 0, 0] as Sides;
 const forces: Force[] = [noForce];
 

@@ -1,12 +1,14 @@
 // deno-lint-ignore-file no-import-prefix
 import { delay } from "jsr:@std/async@1.3.0/delay";
-import { centerForce } from "./src/force/center.ts";
-import { Node } from "./src/element/node.ts";
-import { dashboard } from "./src/render/dashboard.ts";
-import { Simulation } from "./src/simulation/simulation.ts";
-import { embraceForce } from "./src/force/embrace.ts";
-import { implodeForce } from "./src/force/implode.ts";
-import { repulsiveForce } from "./src/force/repulse.ts";
+import { Link, Node } from "./src/element/mod.ts";
+import {
+  centerForce,
+  embraceForce,
+  implodeForce,
+  repulsiveForce,
+} from "./src/force/mod.ts";
+import { dashboard } from "./src/render/mod.ts";
+import { Simulation } from "./src/simulation/mod.ts";
 
 // Tree of nodes
 const width = 80, height = 24;
@@ -15,6 +17,7 @@ const node = canvas.addNode();
 node.addText("Hello, World!", 13, 1);
 const other = canvas.addNode();
 other.addText("Spring Diagram", 15, 1);
+const links = [new Link(node, other)];
 
 // Call back function to render dashboard after each iteration
 let output_lines = 0;
@@ -35,7 +38,7 @@ const callback = async (
 callback(canvas, 0, 0);
 
 // Run simulation
-const simulation = new Simulation(canvas, [], [
+const simulation = new Simulation(canvas, links, [
   centerForce,
   embraceForce,
   implodeForce,

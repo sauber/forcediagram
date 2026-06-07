@@ -1,5 +1,5 @@
 import { assertEquals, assertGreater, assertLess } from "@std/assert";
-import { Node } from "../element/node.ts";
+import { Node } from "../element/mod.ts";
 import { embraceForce } from "./embrace.ts";
 
 function link(parent: Node, child: Node): void {

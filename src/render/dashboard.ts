@@ -5,7 +5,7 @@ import {
   drawLabel,
   drawLabelCentered,
 } from "@sauber/ansi-draw";
-import { Node } from "../element/node.ts";
+import { Node } from "../element/mod.ts";
 
 // Display array with few digits
 const nums = (values: number[]): number[] =>

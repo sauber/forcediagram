@@ -1,6 +1,6 @@
 import { assertLess } from "@std/assert";
 import { implodeForce } from "./implode.ts";
-import { Node, Sides } from "../element/node.ts";
+import { Node, Sides } from "../element/mod.ts";
 
 function link(parent: Node, child: Node) {
   parent.children.push(child);

@@ -1,6 +1,6 @@
 import { assertGreater } from "@std/assert";
 import { centerForce } from "./center.ts";
-import { Node, Text } from "../element/node.ts";
+import { Node, Text } from "../element/mod.ts";
 
 Deno.test("Centering Node", () => {
   const width = 100, height = 100;

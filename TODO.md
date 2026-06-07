@@ -49,14 +49,14 @@ When item is completed change `[ ]` to `[✅]`
 
 - [✅] Fix no-import-prefix lint error in example.ts
   - Objective: Keep inline `jsr:` import in example.ts for standalone
-    runnability; suppress lint rule with `// deno-lint-ignore-file`
-    directive and add `@std/async` to deno.json for project use
+    runnability; suppress lint rule with `// deno-lint-ignore-file` directive
+    and add `@std/async` to deno.json for project use
   - Problem: `jsr:@std/async` inline import in example.ts triggers
     `no-import-prefix` lint error
   - Files: example.ts, deno.json
   - Validation: `deno lint` passes
 
-- [ ] Remove unused variable velocityBefore
+- [✅] Remove unused variable velocityBefore
   - Objective: Clean up dead code in Text.move()
   - Problem: `velocityBefore` variable is assigned but never read
   - Files: src/element/node.ts
@@ -64,19 +64,19 @@ When item is completed change `[ ]` to `[✅]`
 
 ## Missing Features
 
-- [ ] Alignment force
+- [✅] Alignment force
   - Objective: Sibling nodes pull towards aligning edges
   - Problem: Not implemented
   - Files: src/force/align.ts
   - Validation: src/force/align.test.ts
 
-- [ ] Sizing force
+- [✅] Sizing force
   - Objective: Sibling nodes pull towards having same size
   - Problem: Not implemented
   - Files: src/force/size.ts
   - Validation: src/force/size.test.ts
 
-- [ ] Grid force
+- [✅] Grid force
   - Objective: Edges of nodes pull towards canvas grid lines
   - Problem: Not implemented
   - Files: src/force/grid.ts
@@ -88,34 +88,34 @@ When item is completed change `[ ]` to `[✅]`
   - Files: src/force/repulse.ts
   - Validation: src/force/repulse.test.ts
 
-- [ ] Link
+- [✅] Link
   - Objective: module for link definition
   - Problem: Not implemented. Required for Orthogonality and Length forces.
   - Files: src/element/link.ts
   - Validation: src/element/link.test.ts
 
-- [ ] Orthogonality force
+- [✅] Orthogonality force
   - Objective: Links pull towards being vertical or horizontal
   - Problem: Not implemented. Depends on Link element.
   - Files: src/force/orthogonal.ts
   - Validation: src/force/orthogonal.test.ts
 
-- [ ] Length force
+- [✅] Length force
   - Objective: Links pull towards having same length
   - Problem: Not implemented. Depends on Link element.
   - Files: src/force/length.ts
   - Validation: src/force/length.test.ts
 
-- [ ] Update example.ts imports to use mod.ts
-  - Objective: Change all src/ imports in example.ts to reference mod.ts
-    files (e.g., `"./src/force/"`) instead of individual source files.
+- [✅] Update example.ts imports to use mod.ts
+  - Objective: Change all src/ imports in example.ts to reference mod.ts files
+    (e.g., `"./src/force/"`) instead of individual source files.
   - Problem: example.ts imports directly from individual files (e.g.,
     `"./src/force/center.ts"`), which violates the mod.ts convention for
     cross-directory imports.
   - Files: example.ts
   - Validation: `deno run example.ts` runs without errors
 
-- [ ] Create mod.ts barrel files in each src/ subdirectory
+- [✅] Create mod.ts barrel files in each src/ subdirectory
   - Objective: Add `mod.ts` to each src/ subdirectory re-exporting all public
     symbols; update cross-directory imports to reference via `mod.ts`; keep
     same-directory imports pointing directly to source files.
@@ -125,7 +125,7 @@ When item is completed change `[ ]` to `[✅]`
     src/simulation/mod.ts
   - Validation: `deno check` and `deno test` pass
 
-- [ ] Integrate links into simulation forces
+- [✅] Integrate links into simulation forces
   - Objective: Links parameter should drive edge/length forces in simulation
     loop
   - Problem: Links are accepted by Simulation constructor but not used in force

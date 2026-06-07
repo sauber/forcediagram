@@ -275,7 +275,6 @@ export class Text extends Node {
   }
 
   public override move(): number {
-    const velocityBefore = [...this.velocity];
     // Match left and right velocity to maintain fixed width
     const vdx = this.velocity[2] + this.velocity[0];
     const vx = this.velocity[2] - vdx / 2;

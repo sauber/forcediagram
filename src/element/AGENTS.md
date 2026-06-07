@@ -18,8 +18,10 @@ resizes the node.
 Canvas is a regular Node with no parent. It is the root of the node tree.
 
 - Has no parent.
-- Edges do not move because force functions return zero for nodes with no parent.
-- Children are constrained within canvas bounds by movement guardrails (cannot leave canvas).
+- Edges do not move because force functions return zero for nodes with no
+  parent.
+- Children are constrained within canvas bounds by movement guardrails (cannot
+  leave canvas).
 
 ## Text
 

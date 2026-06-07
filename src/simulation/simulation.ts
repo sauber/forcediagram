@@ -1,13 +1,11 @@
-import { Node, Sides } from "../element/node.ts";
-import { Force } from "../force/types.ts";
+import { Link, Node, Sides } from "../element/mod.ts";
+import { Force, lengthForce, orthogonalForce } from "../force/mod.ts";
 
 export type CallBack = (
   tree: Node,
   iteration: number,
   velocity: number,
 ) => Promise<void>;
-
-export type Link = { source: Node; target: Node };
 
 /** Simulation Module
  * - Applies forces to nodes
@@ -21,7 +19,7 @@ export class Simulation {
   constructor(
     /** The root node of the tree */
     private readonly tree: Node,
-    /** An array of links between nodes (not used in current forces) */
+    /** An array of links between nodes used for orthogonal and length forces */
     private readonly links: Link[],
     /** An array of force functions to apply */
     private readonly forces: Force[],
@@ -49,10 +47,14 @@ export class Simulation {
 
   // Apply force calculations
   private applyForces(): void {
+    // Build link-based forces when links exist
+    const linkForces: Force[] = this.links.length > 0
+      ? [orthogonalForce(this.links), lengthForce(this.links)]
+      : [];
+
     for (const node of this.nodes) {
-      for (const force of this.forces) {
+      for (const force of [...this.forces, ...linkForces]) {
         const f: Sides = force(node);
-        // console.debug(`Applying force to node at (${node.x}, ${node.y}):`, f);
         // Verify that force is in valid range [-2;2]
         // Force=0 is no force, Force=[-2;2] is normal force, Force>1 or <-1 is strong force
         if (f.some((v) => v < -2 || v > 2)) {

@@ -1,5 +1,5 @@
-import { nodeDistance } from "../element/distance.ts";
-import { Node, Sides } from "../element/node.ts";
+import { nodeDistance } from "../element/mod.ts";
+import { Node, Sides } from "../element/mod.ts";
 import { Force } from "./types.ts";
 
 /** Apply gravitation force to a node towards center of parent.
