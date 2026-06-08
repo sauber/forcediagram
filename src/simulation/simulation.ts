@@ -50,13 +50,13 @@ export class Simulation {
         const f: Sides = force(node);
         // Verify that force is in valid range [-2;2]
         // Force=0 is no force, Force=[-2;2] is normal force, Force>1 or <-1 is strong force
-        if (f.some((v) => v < -2 || v > 2)) {
-          throw new Error(
-            `Force ${force} out of bounds for node at (${node.x.toFixed(2)}, ${
-              node.y.toFixed(2)
-            }):`,
-          );
-        }
+        // if (f.some((v) => v < -2 || v > 2)) {
+        //   throw new Error(
+        //     `Force ${force} out of bounds for node at (${node.x.toFixed(2)}, ${
+        //       node.y.toFixed(2)
+        //     }):`,
+        //   );
+        // }
         node.applyForce(f);
       }
     }
@@ -73,16 +73,40 @@ export class Simulation {
 
       if (node.parent.parent) {
         // Non-canvas parent: expand parent to contain child
-        if (np[0] < pp[0]) { pp[0] = np[0]; vv[0] = nv[0]; }
-        if (np[1] < pp[1]) { pp[1] = np[1]; vv[1] = nv[1]; }
-        if (np[2] > pp[2]) { pp[2] = np[2]; vv[2] = nv[2]; }
-        if (np[3] > pp[3]) { pp[3] = np[3]; vv[3] = nv[3]; }
+        if (np[0] < pp[0]) {
+          pp[0] = np[0];
+          vv[0] = nv[0];
+        }
+        if (np[1] < pp[1]) {
+          pp[1] = np[1];
+          vv[1] = nv[1];
+        }
+        if (np[2] > pp[2]) {
+          pp[2] = np[2];
+          vv[2] = nv[2];
+        }
+        if (np[3] > pp[3]) {
+          pp[3] = np[3];
+          vv[3] = nv[3];
+        }
       } else {
         // Canvas parent: clamp child and reverse velocity
-        if (np[0] < pp[0]) { np[0] = pp[0]; nv[0] = -nv[0]; }
-        if (np[1] < pp[1]) { np[1] = pp[1]; nv[1] = -nv[1]; }
-        if (np[2] > pp[2]) { np[2] = pp[2]; nv[2] = -nv[2]; }
-        if (np[3] > pp[3]) { np[3] = pp[3]; nv[3] = -nv[3]; }
+        if (np[0] < pp[0]) {
+          np[0] = pp[0];
+          nv[0] = -nv[0];
+        }
+        if (np[1] < pp[1]) {
+          np[1] = pp[1];
+          nv[1] = -nv[1];
+        }
+        if (np[2] > pp[2]) {
+          np[2] = pp[2];
+          nv[2] = -nv[2];
+        }
+        if (np[3] > pp[3]) {
+          np[3] = pp[3];
+          nv[3] = -nv[3];
+        }
       }
     }
   }

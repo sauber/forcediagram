@@ -22,9 +22,24 @@ const canvas = new Node([0, 0, width, height]);
 const node = canvas.addNode();
 node.addText("Hello, World!", 13, 1);
 const other = canvas.addNode();
-other.addText("Spring Diagram", 15, 1);
+other.addText("Force Diagram", 15, 1);
 // const links = [new Link(node, other)];
 node.addLink(other);
+
+// Cluster of Nodes
+const start = canvas.addNode();
+start.addText("Start", 5, 1);
+const end = canvas.addNode();
+end.addText("End", 3, 1);
+const main = canvas.addNode();
+main.addText("Main", 4, 1);
+// const a = main.addNode();
+// a.addText("A", 1, 1);
+// const b = main.addNode();
+// b.addText("B", 1, 1);
+// start.addLink(main);
+// a.addLink(b);
+// b.addLink(end);
 
 // Call back function to render dashboard after each iteration
 let output_lines = 0;
