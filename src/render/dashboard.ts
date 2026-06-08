@@ -4,8 +4,9 @@ import {
   drawFrame,
   drawLabel,
   drawLabelCentered,
+  drawLine,
 } from "@sauber/ansi-draw";
-import { Node } from "../element/mod.ts";
+import { Link, Node } from "../element/mod.ts";
 
 // Display array with few digits
 const nums = (values: number[]): number[] =>
@@ -45,6 +46,17 @@ export const dashboard = (
 ): string => {
   const canvas = new CharCanvas();
   const nodes = [tree, ...tree.children.flatMap((c) => [c, ...c.children])];
+
+  // Draw links between nodes
+  const drawnLinks = new Set<Link>();
+  nodes.forEach((n) =>
+    n.links.forEach((link) => {
+      if (!drawnLinks.has(link)) {
+        drawnLinks.add(link);
+        drawLine(canvas, link.source.x, link.source.y, link.target.x, link.target.y);
+      }
+    })
+  );
 
   // Draw node info and shapes
   nodes.forEach((n, i) => drawLabel(canvas, 1, nodes.length - i, nodeInfo(n)));

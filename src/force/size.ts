@@ -1,5 +1,6 @@
 import { Node, Sides } from "../element/mod.ts";
 import { Force } from "./types.ts";
+import { serpentine } from "./mod.ts";
 
 /** Sibling nodes pull towards having same size
  * For each sibling pair, width and height pull towards average
@@ -9,30 +10,19 @@ export const sizeForce: Force = (node: Node): Sides => {
   const siblings = node.parent.children.filter((c) => c !== node);
   if (siblings.length === 0) return [0, 0, 0, 0] as Sides;
 
-  // Average width and height of siblings
-  const avgWidth = siblings.reduce((sum, s) => sum + s.width, 0) /
+  // Average mass of siblings
+  const avgMass = siblings.reduce((sum, s) => sum + s.mass, 0) /
     siblings.length;
-  const avgHeight = siblings.reduce((sum, s) => sum + s.height, 0) /
-    siblings.length;
+  if (avgMass === 0) return [0, 0, 0, 0] as Sides;
 
-  if (avgWidth === 0 && avgHeight === 0) return [0, 0, 0, 0] as Sides;
+  // Mass ratio: positive when node is larger (shrink), negative when smaller (expand)
+  const massRatio = (node.mass - avgMass) / avgMass;
 
-  // Pull width towards average
-  const widthDiff = node.width - avgWidth;
-  const heightDiff = node.height - avgHeight;
+  // Serpentine ensures force magnitude in [-1, 1]
+  const f = serpentine(-massRatio) / 2;
 
-  const force: Sides = [
-    -widthDiff * 0.01, // Left moves left/right based on width diff
-    0, // Bottom stays
-    widthDiff * 0.01, // Right moves based on width diff
-    0, // Top stays
-  ];
-
-  // Pull height towards average (only for non-text nodes)
-  if (!("label" in node)) {
-    force[1] = -heightDiff * 0.01; // Bottom moves
-    force[3] = heightDiff * 0.01; // Top moves
-  }
+  // Same force to all sides to grow or shrink size
+  const force: Sides = [f, f, f, f];
 
   return force;
 };

@@ -15,9 +15,9 @@ const overlapTestCases: [string, Sides, Sides, number][] = [
 Deno.test("Overlap", () => {
   overlapTestCases.forEach(([name, a, b, expected]) => {
     const r = overlapRatio(a, b);
-    console.log(
-      `${name}: overlapRatio = ${r.toFixed(2)}, expected = ${expected}`,
-    );
+    // console.log(
+    //   `${name}: overlapRatio = ${r.toFixed(2)}, expected = ${expected}`,
+    // );
     assertEquals(r, expected);
   });
 });
@@ -64,11 +64,11 @@ Deno.test("Repulsive Force", () => {
     nodeB.parent = parent;
 
     const force = repulsiveForce(nodeA);
-    console.log(
-      `${name}: force = ${
-        force.map((f) => f.toPrecision(2))
-      }, expected min = ${min}, expected max = ${max}`,
-    );
+    // console.log(
+    //   `${name}: force = ${
+    //     force.map((f) => f.toPrecision(2))
+    //   }, expected min = ${min}, expected max = ${max}`,
+    // );
     assertEquals(
       force.map((f, i) => (
         // Exact match if min == max, otherwise check if within range
@@ -104,14 +104,14 @@ Deno.test("Repulsive Force Angle", () => {
 
   // Format of test cases: [description, position, index of stronger force, index of weaker force]
   const angleTestCases: [string, Sides, number, number][] = [
-    ["30° (up>right)", [125, 143, 225, 243], 3, 2],
-    ["60° (right>up)", [143, 125, 243, 225], 2, 3],
-    ["120° (right>down)", [143, -125, 243, -25], 2, 1],
-    ["150°(down>right)", [125, -143, 225, -43], 1, 2],
-    ["210° (down>left)", [-125,-143, -25,-43], 1, 0],
-    ["240° (left>down)", [-143, -125, -43, -25], 0, 1],
-    ["300° (left>up)", [-143, 125, -43, 225], 0, 3],
-    ["330° (up>left)", [-125, 143, -25, 243], 3, 0],
+    ["60° (up>right)", [125, 143, 225, 243], 3, 2],
+    ["30° (right>up)", [143, 125, 243, 225], 2, 3],
+    ["-30° (right>down)", [143, -125, 243, -25], 2, 1],
+    ["-60°(down>right)", [125, -143, 225, -43], 1, 2],
+    ["-120° (down>left)", [-125,-143, -25,-43], 1, 0],
+    ["-150° (left>down)", [-143, -125, -43, -25], 0, 1],
+    ["150° (left>up)", [-143, 125, -43, 225], 0, 3],
+    ["120° (up>left)", [-125, 143, -25, 243], 3, 0],
   ];
   angleTestCases.forEach(([description, position, strongIndex, weakIndex]) => {
     // const radians = (angle * Math.PI) / 180;
@@ -127,9 +127,9 @@ Deno.test("Repulsive Force Angle", () => {
     nodeB.parent = parent;
 
     const force = repulsiveForce(nodeA);
-    console.log(
-      `${description}°: force = ${force.map((f) => f.toPrecision(2))}`,
-    );
+    // console.log(
+    //   `${description}°: force = ${force.map((f) => f.toPrecision(2))}`,
+    // );
 
     // Assert force direction and magnitude based on angle
     assertGreater(

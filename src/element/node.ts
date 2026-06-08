@@ -1,3 +1,5 @@
+import { Link } from "./mod.ts";
+
 // Vector of Left, Bottom, Right and Top
 export type Sides = [number, number, number, number];
 
@@ -5,13 +7,14 @@ export type Sides = [number, number, number, number];
 export class Node {
   public parent: Node | undefined;
   public readonly children: Node[] = [];
+  public readonly links: Link[] = [];
   public readonly velocity: Sides = [0, 0, 0, 0];
 
   constructor(
     public readonly position: Sides,
   ) {}
 
-  // Add or create Node at random location
+  /** Add or create Node at random location */
   public addNode(node?: Node): Node {
     if (!node) {
       const x = this.left + Math.random() * this.width;
@@ -23,7 +26,7 @@ export class Node {
     return node;
   }
 
-  // Create a Text node at random location
+  /** Create a Text node at random location */
   public addText(label: string, width: number, height: number): Text {
     const x = this.left + width / 2 + Math.random() * (this.width - width);
     const y = this.bottom + height / 2 + Math.random() * (this.height - height);
@@ -39,17 +42,30 @@ export class Node {
     return text;
   }
 
+  /** Add bidirectional link to other node */
+  public addLink(other: Node): Link {
+    const link = new Link(this, other);
+    this.links.push(link);
+    other.links.push(link);
+    return link;
+  }
+
+  /** Left edge position */
   public get left(): number {
     return this.position[0];
   }
 
+  /** Bottom edge position */
   public get bottom(): number {
     return this.position[1];
   }
+
+  /** Right edge position */
   public get right(): number {
     return this.position[2];
   }
 
+  /** Top edge position */
   public get top(): number {
     return this.position[3];
   }
@@ -237,6 +253,7 @@ export class Node {
 
 /** Text label with parent and no children */
 export class Text extends Node {
+  /** Create a Text node with fixed size */
   constructor(
     public readonly label: string,
     center: number, // X position
@@ -254,18 +271,22 @@ export class Text extends Node {
     super(position);
   }
 
+  /** Fixed width */
   public override get width(): number {
     return this._width;
   }
 
+  /** Fixed height */
   public override get height(): number {
     return this._height;
   }
 
+  /** Text cannot have children */
   public override addNode(): Node {
     throw new Error("Text cannot have children");
   }
 
+  /** Text cannot have children */
   public override addText(
     _label: string,
     _width: number,
@@ -274,6 +295,7 @@ export class Text extends Node {
     throw new Error("Text cannot have children");
   }
 
+  /** Match sides to maintain fixed size */
   public override move(): number {
     // Match left and right velocity to maintain fixed width
     const vdx = this.velocity[2] + this.velocity[0];

@@ -13,8 +13,8 @@ A number of forces are in effect:
 - [ ] Grid: Edges of nodes pull towards canvas grid lines
 - [ ] Overlap: Repulsion of overlapping nodes, overlapping links or overlapping
       of links and nodes.
-- [ ] Orthogonality: Links pull towards being vertical or horizontal
-- [ ] Length: Links pull towards having same length
+- [x] Orthogonality: Links pull towards being vertical or horizontal
+- [x] Length: Links from same node approach same length
 
 All forces are one dimensional, just like the position of the edge is either X
 or Y. A force pulling edges outwards away from it's own center as a positive

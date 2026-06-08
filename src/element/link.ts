@@ -13,4 +13,12 @@ export class Link {
     const dy = this.source.y - this.target.y;
     return Math.sqrt(dx * dx + dy * dy);
   }
+
+  /** Angle of the line from source to target in radians, in [-π, π] */
+  get angle(): number {
+    return Math.atan2(
+      this.target.y - this.source.y,
+      this.target.x - this.source.x,
+    );
+  }
 }

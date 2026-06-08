@@ -1,9 +1,11 @@
 import {
   assertEquals,
   assertGreater,
+  assertInstanceOf,
   assertLess,
   assertThrows,
 } from "@std/assert";
+import { Link } from "./link.ts";
 import { Node, Sides, Text } from "./node.ts";
 
 Deno.test("Node properties", () => {
@@ -83,6 +85,23 @@ Deno.test("Enlarge", () => {
   node.move();
   assertEquals(node.position, [x1 - d, y1 - d, x2 + d, y2 + d]);
   assertGreater(node.mass, mass);
+});
+
+Deno.test("Add link", () => {
+  const nodeA = new Node([0, 0, 10, 10]);
+  const nodeB = new Node([20, 20, 30, 30]);
+
+  assertEquals(nodeA.links.length, 0);
+  assertEquals(nodeB.links.length, 0);
+
+  const link: Link = nodeA.addLink(nodeB);
+  assertInstanceOf(link, Link);
+
+  assertEquals(nodeA.links.length, 1);
+  assertEquals(nodeB.links.length, 1);
+
+  assertEquals(link.source, nodeA);
+  assertEquals(link.target, nodeB);
 });
 
 Deno.test("Shrink", () => {

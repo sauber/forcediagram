@@ -1,5 +1,5 @@
-import { Link, Node, Sides } from "../element/mod.ts";
-import { Force, lengthForce, orthogonalForce } from "../force/mod.ts";
+import { Node, Sides } from "../element/mod.ts";
+import { Force } from "../force/mod.ts";
 
 export type CallBack = (
   tree: Node,
@@ -19,8 +19,6 @@ export class Simulation {
   constructor(
     /** The root node of the tree */
     private readonly tree: Node,
-    /** An array of links between nodes used for orthogonal and length forces */
-    private readonly links: Link[],
     /** An array of force functions to apply */
     private readonly forces: Force[],
   ) {
@@ -47,19 +45,14 @@ export class Simulation {
 
   // Apply force calculations
   private applyForces(): void {
-    // Build link-based forces when links exist
-    const linkForces: Force[] = this.links.length > 0
-      ? [orthogonalForce(this.links), lengthForce(this.links)]
-      : [];
-
     for (const node of this.nodes) {
-      for (const force of [...this.forces, ...linkForces]) {
+      for (const force of this.forces) {
         const f: Sides = force(node);
         // Verify that force is in valid range [-2;2]
         // Force=0 is no force, Force=[-2;2] is normal force, Force>1 or <-1 is strong force
         if (f.some((v) => v < -2 || v > 2)) {
           throw new Error(
-            `Force out of bounds for node at (${node.x.toFixed(2)}, ${
+            `Force ${force} out of bounds for node at (${node.x.toFixed(2)}, ${
               node.y.toFixed(2)
             }):`,
           );

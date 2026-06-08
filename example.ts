@@ -1,11 +1,16 @@
 // deno-lint-ignore-file no-import-prefix
 import { delay } from "jsr:@std/async@1.3.0/delay";
-import { Link, Node } from "./src/element/mod.ts";
+import { Node } from "./src/element/mod.ts";
 import {
   centerForce,
+  containmentForce,
   embraceForce,
+  gridForce,
   implodeForce,
+  lengthForce,
+  orthogonalForce,
   repulsiveForce,
+  sizeForce,
 } from "./src/force/mod.ts";
 import { dashboard } from "./src/render/mod.ts";
 import { Simulation } from "./src/simulation/mod.ts";
@@ -18,7 +23,8 @@ const node = canvas.addNode();
 node.addText("Hello, World!", 13, 1);
 const other = canvas.addNode();
 other.addText("Spring Diagram", 15, 1);
-const links = [new Link(node, other)];
+// const links = [new Link(node, other)];
+node.addLink(other);
 
 // Call back function to render dashboard after each iteration
 let output_lines = 0;
@@ -39,11 +45,16 @@ const callback = async (
 callback(canvas, 0, 0);
 
 // Run simulation
-const simulation = new Simulation(canvas, links, [
-  centerForce,
-  embraceForce,
-  implodeForce,
-  repulsiveForce,
+const simulation = new Simulation(canvas, [
   alignForce,
+  centerForce,
+  containmentForce,
+  embraceForce,
+  gridForce(4),
+  implodeForce,
+  lengthForce,
+  orthogonalForce,
+  repulsiveForce,
+  sizeForce,
 ]);
 simulation.settle(500, 0.001, callback);

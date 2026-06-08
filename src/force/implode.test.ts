@@ -16,7 +16,7 @@ Deno.test("Implosion", () => {
 
   // Apply centering forces
   const force: Sides = implodeForce(node);
-  console.log({ force });
+  // console.log({ force });
 
   // Sides should move inwards
   [0, 1, 2, 3].forEach((i) => assertLess(force[i], 0));

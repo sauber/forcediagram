@@ -35,7 +35,7 @@ See `src/render/AGENTS.md` for design.
 - ✅ Node and Text elements: Implemented with tests
 - ✅ Rendering (dashboard): Complete with tests
 - ✅ Simulation loop: Basic implementation with tests
-- ✅ Forces implemented: Center, Containment, Implosion, Embracement, Repulsion
-- ❌ Forces not implemented: Alignment, Sizing, Grid, Overlap (links/nodes),
+- ✅ Forces implemented: Center, Containment, Implosion, Embracement, Repulsion,
   Orthogonality, Length
-- ❌ Link element: Not implemented
+- ❌ Forces not implemented: Alignment, Sizing, Grid, Overlap (links/nodes)
+- ✅ Link element: Implemented
