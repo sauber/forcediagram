@@ -62,6 +62,15 @@ When item is completed change `[ ]` to `[✅]`
   - Files: src/element/node.ts
   - Validation: `deno lint` passes
 
+## Bugs
+
+- [ ] Guardrail for staying in canvas
+  - Objective: Keep nodes inside canvas
+  - Problem: Not implemented. Current guardrail expands parent, but for for root
+    node children should move instead.
+  - Files: src/force/node.ts
+  - Validation: src/force/node.test.ts
+
 ## Missing Features
 
 - [✅] Alignment force
@@ -82,11 +91,11 @@ When item is completed change `[ ]` to `[✅]`
   - Files: src/force/grid.ts
   - Validation: src/force/grid.test.ts
 
-- [ ] Overlap repulsion
-  - Objective: Repulsion of overlapping nodes, links, or links and nodes
-  - Problem: Overlap between links and nodes is not handled
-  - Files: src/force/repulse.ts
-  - Validation: src/force/repulse.test.ts
+- [ ] Link cross avoidance
+  - Objective: Repulsion of overlapping links crossing each other
+  - Problem: Not implemented. Links may cross
+  - Files: src/force/cross.ts
+  - Validation: src/force/cross.test.ts
 
 - [✅] Link
   - Objective: module for link definition
@@ -132,3 +141,10 @@ When item is completed change `[ ]` to `[✅]`
     calculations
   - Files: src/simulation/simulation.ts
   - Validation: src/simulation/simulation.test.ts
+
+- [ ] Simulation guardrails
+  - Objective: Guardrails are simulation features
+  - Problem: Currently guardrails are implemented and applied inside nodes. Move
+    guardrails to simulation loop.
+  - Files: src/element/node.ts, src/simulation/simulation.ts
+  - Validation: src/element/node.test.ts, src/simulation/simulation.test.ts
