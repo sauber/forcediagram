@@ -146,103 +146,12 @@ export class Node {
       this.velocity[3] = -this.velocity[3];
     }
 
-    // Guardrail #2: Parent should contain children
-    // Remediation: Push parent to fit child and match velocity
-    // Exception: Canvas node has no parent and cannot change size
-    if (this.parent) {
-      const pp = this.parent.position;
-      const vv = this.parent.velocity;
-
-      if (this.parent.parent) {
-        // console.log({ newPos, parentPos: pp });
-        if (newPos[0] < pp[0]) {
-          // console.log("G#2 Child left outside parent");
-          // Deno.exit(1);
-          pp[0] = newPos[0];
-          vv[0] = this.velocity[0];
-        }
-        if (newPos[1] < pp[1]) {
-          // console.log("G#2 Child bottom outside parent");
-          // Deno.exit(1);
-          pp[1] = newPos[1];
-          vv[1] = this.velocity[1];
-        }
-        if (newPos[2] > pp[2]) {
-          // console.log("G#2 Child right outside parent");
-          // Deno.exit(1);
-          pp[2] = newPos[2];
-          vv[2] = this.velocity[2];
-        }
-        if (newPos[3] > pp[3]) {
-          // console.log("G#2 Child top outside parent");
-          // Deno.exit(1);
-          pp[3] = newPos[3];
-          vv[3] = this.velocity[3];
-        }
-      } else {
-        // Check if top nodes reach beyond canvas size and reverse velocity
-        const canvas = pp;
-        if (newPos[0] < canvas[0]) {
-          // console.log("G#2 Left outside canvas");
-          newPos[0] = canvas[0];
-          this.velocity[0] = -this.velocity[0];
-        }
-        if (newPos[1] < canvas[1]) {
-          // console.log("G#2 Bottom outside canvas");
-          newPos[1] = canvas[1];
-          this.velocity[1] = -this.velocity[1];
-        }
-        if (newPos[2] > canvas[2]) {
-          // console.log("G#2 Right outside canvas");
-          newPos[2] = canvas[2];
-          this.velocity[2] = -this.velocity[2];
-        }
-        if (newPos[3] > canvas[3]) {
-          // console.log("G#2 Top outside canvas");
-          newPos[3] = canvas[3];
-          this.velocity[3] = -this.velocity[3];
-        }
-      }
-    }
-
     // Move edges
     [0, 1, 2, 3].forEach((i) => {
       this.position[i] = newPos[i];
       this.velocity[i] *= 0.9; // Friction
       totalVelocity += Math.abs(this.velocity[i]);
     });
-
-    // Generate a text string of node location and velocity for debugging
-    const nodeInfo = (n: Node) =>
-      `p: ${n.position.map((p) => parseFloat(p.toFixed(2)))} xy: ${
-        [n.x, n.y].map((p) => parseFloat(p.toFixed(2)))
-      } m: ${n.mass} v: ${n.velocity.map((v) => parseFloat(v.toFixed(2)))}${
-        "label" in n ? " l: " + n.label : ""
-      }`;
-
-    // Guardrail #3: Confirm child within edges of parent after moving
-    if (this.parent) {
-      if (this.left < this.parent.left) {
-        console.log("Parent:", nodeInfo(this.parent));
-        console.log("Child:", nodeInfo(this));
-        throw new Error("Left edge outside parent");
-      }
-      if (this.bottom < this.parent.bottom) {
-        console.log("Parent:", nodeInfo(this.parent));
-        console.log("Child:", nodeInfo(this));
-        throw new Error("Bottom edge outside parent");
-      }
-      if (this.right > this.parent.right) {
-        console.log("Parent:", nodeInfo(this.parent));
-        console.log("Child:", nodeInfo(this));
-        throw new Error("Right edge outside parent");
-      }
-      if (this.top > this.parent.top) {
-        console.log("Parent:", nodeInfo(this.parent));
-        console.log("Child:", nodeInfo(this));
-        throw new Error("Top edge outside parent");
-      }
-    }
 
     // Move children
     this.children.forEach((c) => totalVelocity += c.move());

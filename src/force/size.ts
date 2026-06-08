@@ -1,6 +1,6 @@
 import { Node, Sides } from "../element/mod.ts";
 import { Force } from "./types.ts";
-import { serpentine } from "./mod.ts";
+import { serpentine } from "./force.ts";
 
 /** Sibling nodes pull towards having same size
  * For each sibling pair, width and height pull towards average

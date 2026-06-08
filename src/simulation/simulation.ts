@@ -62,6 +62,31 @@ export class Simulation {
     }
   }
 
+  // Apply guardrails: keep nodes within parent bounds
+  private applyGuardrails(): void {
+    for (const node of this.nodes) {
+      if (!node.parent) continue;
+      const pp = node.parent.position;
+      const vv = node.parent.velocity;
+      const np = node.position;
+      const nv = node.velocity;
+
+      if (node.parent.parent) {
+        // Non-canvas parent: expand parent to contain child
+        if (np[0] < pp[0]) { pp[0] = np[0]; vv[0] = nv[0]; }
+        if (np[1] < pp[1]) { pp[1] = np[1]; vv[1] = nv[1]; }
+        if (np[2] > pp[2]) { pp[2] = np[2]; vv[2] = nv[2]; }
+        if (np[3] > pp[3]) { pp[3] = np[3]; vv[3] = nv[3]; }
+      } else {
+        // Canvas parent: clamp child and reverse velocity
+        if (np[0] < pp[0]) { np[0] = pp[0]; nv[0] = -nv[0]; }
+        if (np[1] < pp[1]) { np[1] = pp[1]; nv[1] = -nv[1]; }
+        if (np[2] > pp[2]) { np[2] = pp[2]; nv[2] = -nv[2]; }
+        if (np[3] > pp[3]) { np[3] = pp[3]; nv[3] = -nv[3]; }
+      }
+    }
+  }
+
   // Run simulation loop
   public async settle(
     maxIterations: number,
@@ -82,10 +107,10 @@ export class Simulation {
       let velocity = 0;
       this.nodes.forEach((node) => (velocity += node.move()));
 
-      // console.log("Iteration:", i, "Global velocity:", velocity);
+      // Apply guardrails
+      this.applyGuardrails();
 
-      // Calculate velocity
-      // const velocity = this.calculateVelocity();
+      // console.log("Iteration:", i, "Global velocity:", velocity);
 
       // Call callback if provided
       if (callback) {

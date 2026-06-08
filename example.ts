@@ -2,6 +2,7 @@
 import { delay } from "jsr:@std/async@1.3.0/delay";
 import { Node } from "./src/element/mod.ts";
 import {
+  alignForce,
   centerForce,
   containmentForce,
   embraceForce,
@@ -14,7 +15,6 @@ import {
 } from "./src/force/mod.ts";
 import { dashboard } from "./src/render/mod.ts";
 import { Simulation } from "./src/simulation/mod.ts";
-import { alignForce } from "./src/force/align.ts";
 
 // Tree of nodes
 const width = 80, height = 24;

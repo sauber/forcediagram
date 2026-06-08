@@ -64,7 +64,26 @@ When item is completed change `[ ]` to `[✅]`
 
 ## Bugs
 
-- [ ] Guardrail for staying in canvas
+- [ ] Link length uses midpoint-to-midpoint, should be edge-to-edge
+  - Objective: `Link.length` returns distance between closest edges of connected
+    nodes; negative when nodes overlap.
+  - Problem: Currently returns Euclidean distance between node midpoints, which
+    doesn't reflect actual gap between node borders. Edge-to-edge distance is
+    needed for accurate length/link forces.
+  - Files: src/element/link.ts, src/element/link.test.ts, src/force/length.ts
+  - Validation: src/element/link.test.ts
+
+- [ ] Guardrail force too narrow — stuck nodes outside canvas
+  - Objective: All nodes outside canvas bounds are pushed back inside by
+    guardrail force, regardless of nesting depth.
+  - Problem: `guardrailForce` only applies to direct children of canvas
+    (`!node.parent.parent`). Nested nodes (children of non-canvas parents) that
+    extend beyond canvas get no guardrail force and remain stuck with near-zero
+    velocity.
+  - Files: src/force/node.ts
+  - Validation: src/force/node.test.ts
+
+- [✅] Guardrail for staying in canvas
   - Objective: Keep nodes inside canvas
   - Problem: Not implemented. Current guardrail expands parent, but for for root
     node children should move instead.
@@ -72,6 +91,14 @@ When item is completed change `[ ]` to `[✅]`
   - Validation: src/force/node.test.ts
 
 ## Missing Features
+
+- [ ] Grid force scope too broad
+  - Objective: Grid forces only pull direct canvas children toward grid lines,
+    leaving nested node layout unaffected.
+  - Problem: `gridForce` applies to all non-root nodes, which pulls nested
+    nodes toward grid lines and can misalign them inside their parent box.
+  - Files: src/force/grid.ts
+  - Validation: src/force/grid.test.ts
 
 - [✅] Alignment force
   - Objective: Sibling nodes pull towards aligning edges
@@ -91,7 +118,7 @@ When item is completed change `[ ]` to `[✅]`
   - Files: src/force/grid.ts
   - Validation: src/force/grid.test.ts
 
-- [ ] Link cross avoidance
+- [✅] Link cross avoidance
   - Objective: Repulsion of overlapping links crossing each other
   - Problem: Not implemented. Links may cross
   - Files: src/force/cross.ts
@@ -142,7 +169,7 @@ When item is completed change `[ ]` to `[✅]`
   - Files: src/simulation/simulation.ts
   - Validation: src/simulation/simulation.test.ts
 
-- [ ] Simulation guardrails
+- [✅] Simulation guardrails
   - Objective: Guardrails are simulation features
   - Problem: Currently guardrails are implemented and applied inside nodes. Move
     guardrails to simulation loop.

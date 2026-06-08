@@ -38,5 +38,4 @@ Connection between two nodes, except Canvas.
 
 - Has endpoints in the middle of nodes
 - Has no size
-- Has a length which is distance from edge to edge of connected nodes, and note
-  distance between midpoints of nodes.
+- Has a length which is Euclidean distance between midpoints of connected nodes.

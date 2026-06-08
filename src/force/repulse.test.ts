@@ -13,7 +13,7 @@ const overlapTestCases: [string, Sides, Sides, number][] = [
 ];
 
 Deno.test("Overlap", () => {
-  overlapTestCases.forEach(([name, a, b, expected]) => {
+  overlapTestCases.forEach(([_name, a, b, expected]) => {
     const r = overlapRatio(a, b);
     // console.log(
     //   `${name}: overlapRatio = ${r.toFixed(2)}, expected = ${expected}`,
@@ -53,7 +53,7 @@ const repulsiveTestCases: [string, Sides, Sides, Sides, Sides][] = [
 ];
 
 Deno.test("Repulsive Force", () => {
-  repulsiveTestCases.forEach(([name, a, b, min, max]) => {
+  repulsiveTestCases.forEach(([_name, a, b, min, max]) => {
     // Create object tree
     const nodeA = new Node(a);
     const nodeB = new Node(b);

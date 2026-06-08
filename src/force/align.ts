@@ -1,5 +1,5 @@
 import { Node, nodeDistance, Sides } from "../element/mod.ts";
-import { serpentine } from "./mod.ts";
+import { serpentine } from "./force.ts";
 import { Force } from "./types.ts";
 
 /** Sibling nodes pull towards aligning edges

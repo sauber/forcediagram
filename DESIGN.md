@@ -33,9 +33,11 @@ See `src/render/AGENTS.md` for design.
 ## Implementation Status
 
 - ✅ Node and Text elements: Implemented with tests
-- ✅ Rendering (dashboard): Complete with tests
+- ✅ Rendering (dashboard): Complete
 - ✅ Simulation loop: Basic implementation with tests
 - ✅ Forces implemented: Center, Containment, Implosion, Embracement, Repulsion,
   Orthogonality, Length
-- ❌ Forces not implemented: Alignment, Sizing, Grid, Overlap (links/nodes)
+- ✅ Forces implemented: Alignment, Sizing, Grid, Overlap (links/nodes), Cross avoidance
+- ✅ Guardrail force: Canvas children repelled from edges
+- ✅ Simulation guardrails: Parent-expansion and canvas-clamping moved to simulation loop
 - ✅ Link element: Implemented
