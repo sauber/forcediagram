@@ -1,5 +1,10 @@
 import { Sides } from "./node.ts";
 
+/** Calculates the distance between two nodes
+ * @param a - Origin node's sides [left, bottom, right, top]
+ * @param b - Target node's sides [left, bottom, right, top]
+ * @returns The distance from sides of node a to sides of node b: [left, bottom, right, top]
+ */
 export function nodeDistance(a: Sides, b: Sides): Sides {
   return [
     // Distance from left of node a to right of node b

@@ -9,6 +9,7 @@ import {
 } from "./src/force/mod.ts";
 import { dashboard } from "./src/render/mod.ts";
 import { Simulation } from "./src/simulation/mod.ts";
+import { alignForce } from "./src/force/align.ts";
 
 // Tree of nodes
 const width = 80, height = 24;
@@ -43,5 +44,6 @@ const simulation = new Simulation(canvas, links, [
   embraceForce,
   implodeForce,
   repulsiveForce,
+  alignForce,
 ]);
 simulation.settle(500, 0.001, callback);
